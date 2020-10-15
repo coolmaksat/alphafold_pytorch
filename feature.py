@@ -161,7 +161,7 @@ def feature_generation(seq_file, out_file):
             aln, aln_id = read_aln(fas_file)
             aln = aln[:, aln[0] != '-']
             write_aln(aln, aln_id, aln_file)
-            exit()
+            # exit()
 
         if mat_file.exists():
             mat = sio.loadmat(mat_file)
@@ -191,7 +191,8 @@ def feature_generation(seq_file, out_file):
         non_gapped_profile = np.zeros((L, 21), dtype=np.float32)
         for i in range(L):
             for j in aln[:, i]:
-                non_gapped_profile[i, mapping[j]] += 1
+                if j in mapping:
+                    non_gapped_profile[i, mapping[j]] += 1
         non_gapped_profile[:, -1] = 0
         non_gapped_profile /= non_gapped_profile.sum(-1).reshape(-1, 1)
 
@@ -244,7 +245,7 @@ def feature_generation(seq_file, out_file):
             'profile_with_prior_without_gaps': np.zeros((L, 21), dtype=np.float32)
         }
         dataset.append(data)
-    
+    print(f"Saving the data to {out_file}")
     np.save(out_file, dataset, allow_pickle=True)
 
 if __name__ == '__main__':
