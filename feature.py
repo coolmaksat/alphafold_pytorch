@@ -182,8 +182,9 @@ def feature_generation(seq_file, out_file):
         reweighted_profile = np.zeros((L, 22), dtype=np.float32)
         for i in range(L):
             for j in range(aln.shape[0]):
-                hhblits_profile[i, mapping[aln[j, i]]] += 1
-                reweighted_profile[i, mapping[aln[j, i]]] += seq_weight[j]
+                if aln[j, i] in mapping:
+                    hhblits_profile[i, mapping[aln[j, i]]] += 1
+                    reweighted_profile[i, mapping[aln[j, i]]] += seq_weight[j]
         hhblits_profile /= hhblits_profile.sum(-1).reshape(-1, 1)
         reweighted_profile /= reweighted_profile.sum(-1).reshape(-1, 1)
 
