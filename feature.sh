@@ -1,7 +1,7 @@
 #!/bin/bash
 
 TARGET="$1"
-TARGET_DIR="$1"
+TARGET_DIR="swissprot/${TARGET:0:1}/${TARGET:1:1}/${TARGET}"
 TARGET_SEQ="${TARGET_DIR}/${TARGET}.seq" # fasta format
 PLMDCA_DIR="plmDCA/plmDCA_asymmetric_v2/"
 
