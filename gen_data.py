@@ -18,8 +18,10 @@ def main(data_file):
     # Load interpro data
     df = pd.read_pickle(data_file)
     cnt = {}
+    lf = open('swissprot/proteins.list', 'w')
     for row in df.itertuples():
         p = row.proteins
+        lf.write(p + '\n')
         out_path = f'swissprot/{p[0]}/{p[1]}/{p}/'
         if not os.path.exists(out_path):
             os.makedirs(out_path)
@@ -27,7 +29,7 @@ def main(data_file):
         with open(out_file, 'w') as f:
             f.write('>' + row.proteins + '\n')
             f.write(row.sequences + '\n')
-        break
+    lf.close()
 
 
 if __name__ == '__main__':
