@@ -28,3 +28,6 @@ cd -
 
 # run again to update target features data
 python feature.py -s $TARGET_SEQ -f
+
+# clean up
+rm ${TARGET_DIR}/${TARGET}-*
